@@ -46,6 +46,7 @@ class _ScannerState extends State<Scanner> {
               print('Hi');
               jsonData = await scanUrl('https://www.hackerrank.com/on-your-marks');
               jsonData = convert.jsonDecode(jsonData.body);
+              // jsonData.containsKey();
               data= jsonData["data"]["id"];
               jsonData = await getScanUrl(data);
               jsonData = convert.jsonDecode(jsonData.body);
