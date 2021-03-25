@@ -12,19 +12,28 @@ class Scanner extends StatefulWidget {
 class _ScannerState extends State<Scanner> {
   String url1;
   var jsonData;
-  List data;
+  var data;
+  var map = new Map<String, String>();
+
   Future<http.Response> scanUrl(String url) {
-  return http.post(
-    Uri.https('www.virustotal.com', 'api/v3/urls'),
-    headers: <String, String>{
-      'x-apikey': TOKEN,
-    },
-    body: convert.jsonEncode(<String, String>{
-      'url': url,
-    }),
-  );
+  map['url']  = url;
+    return http.post(
+      Uri.https('www.virustotal.com', 'api/v3/urls'),
+      headers: <String, String>{
+        'x-apikey': TOKEN,
+      },
+      body: map
+    );
 }
 
+  Future<http.Response> getScanUrl(String id) {
+    return http.get(
+      Uri.https('www.virustotal.com', 'api/v3/analyses/$id'),
+      headers: <String, String>{
+        'x-apikey': TOKEN,
+      },
+    );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +44,16 @@ class _ScannerState extends State<Scanner> {
             child: Text('Search'),
             onPressed: () async {
               print('Hi');
-              jsonData = await scanUrl('https://flutter.dev/docs/cookbook/networking/send-data');
+              jsonData = await scanUrl('https://www.hackerrank.com/on-your-marks');
               jsonData = convert.jsonDecode(jsonData.body);
-              data= jsonData["attributes"];
-              print(data);
+              data= jsonData["data"]["id"];
+              jsonData = await getScanUrl(data);
+              jsonData = convert.jsonDecode(jsonData.body);
+              
+              print(jsonData);
+
+              // I/flutter (23427): {error: {message: Argument "url" is missing, code: BadRequestError}}
+
               },
           )
         ),
