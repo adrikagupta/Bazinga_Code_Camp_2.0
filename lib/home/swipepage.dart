@@ -2,6 +2,7 @@ import 'dart:async';
 
 import '../models/slide.dart';
 import 'home.dart';
+import '../scanner/scanner.dart';
 import '../widgets/slideDot.dart';
 import '../widgets/slideItem.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +114,7 @@ class _SwipePagesState extends State<SwipePages> {
                         color: Color.fromRGBO(56, 173, 169,1.0),
                         textColor: Colors.white,
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Scanner()));
                         } 
                       ),
                     )
